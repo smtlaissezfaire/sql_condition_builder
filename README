@@ -1,13 +1,21 @@
 SqlConditionBuilder
 ===================
 
-Introduction goes here.
+Build AR conditions easily.
 
 
 Example
 =======
 
-Example goes here.
+builder = SqlConditionBuilder.new
+
+@builder.add_condition "foo IS NULL"
+@builder.add_condition "(bar = ? OR bar = ?)", 10, 20
+@builder.add_condition.baz = "something"
+
+@builder.to_a    #=> ["foo IS NULL AND (bar = ? OR bar = ?) AND baz = ?", 10, 20, "something"]
+@builder.to_sql  #=> "foo IS NULL AND (bar = 10 OR bar = 20) AND baz = 'something'"
 
 
-Copyright (c) 2009 [name of plugin creator], released under the MIT license
+
+Copyright (c) 2009 Scott Taylor / smtlaissezfaire <scott@railsnewbie.com>, released under the MIT license
