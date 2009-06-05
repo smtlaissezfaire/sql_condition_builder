@@ -97,4 +97,17 @@ describe SqlConditionBuilder do
     @builder.add_condition "foo = ?", nil
     @builder.to_a.should == ["foo = ?", nil]
   end
+  
+  describe "merging an attribute hash" do
+    it "should add conditions with a hash with key-value pair" do
+      @builder.merge! :foo => "bar"
+      @builder.to_a.should == ["foo = ?", "bar"]
+    end
+    
+    it "should tack on those conditions" do
+      @builder.one = "two"
+      @builder.merge! :foo => "bar"
+      @builder.to_a.should == ["one = ? AND foo = ?", "two", "bar"]
+    end
+  end
 end

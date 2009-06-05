@@ -33,6 +33,12 @@ class SqlConditionBuilder
   def respond_to?(sym, include_private=false)
     accessor?(sym) || super
   end
+  
+  def merge!(hash)
+    hash.each do |key, value|
+      send "#{key}=", value
+    end
+  end
 
 private
 
