@@ -3,7 +3,7 @@ class SqlConditionBuilder
   MINOR = 1
   TINY  = 0
   VERSION = "#{MAJOR}.#{MINOR}.#{TINY}"
-  
+
   def initialize
     @strings = []
     @bind_variables = []
@@ -14,12 +14,12 @@ class SqlConditionBuilder
 
   def add_condition(string, bind_variable=EmptyCondition.new)
     @strings << string
-    
+
     unless bind_variable.kind_of?(EmptyCondition)
       @bind_variables << bind_variable
     end
   end
-  
+
   def to_a
     [@strings.join(" AND "), @bind_variables].flatten
   end
@@ -33,7 +33,7 @@ class SqlConditionBuilder
   def respond_to?(sym, include_private=false)
     accessor?(sym) || super
   end
-  
+
   def merge!(hash)
     hash.each do |key, value|
       send "#{key}=", value
@@ -54,7 +54,9 @@ private
     sym.to_s =~ /.*\=$/ ? true : false
   end
 
+  class Sanitizer < ActiveRecord::Base; end
+
   def sanitize_sql(array)
-    ActiveRecord::Base.send :sanitize_sql, array
+    Sanitizer.send :sanitize_sql, array
   end
 end
