@@ -58,6 +58,11 @@ describe SqlConditionBuilder do
     @builder.to_a.should == ["two = ?", 2]
   end
 
+  it "should allow an array as a bind variable" do
+    @builder.add_condition("id IN (?)", [1,2])
+    @builder.to_a.should == ["id IN (?)", [1,2]]
+  end
+
   it "should raise a NoMethodError if the method does not have =" do
     lambda {
       @builder.one

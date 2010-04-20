@@ -21,7 +21,7 @@ class SqlConditionBuilder
   end
 
   def to_a
-    [@strings.join(" AND "), @bind_variables].flatten
+    [@strings.join(" AND "), *@bind_variables]
   end
 
   def to_s
